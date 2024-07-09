@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from medilabapp.models import Company
 from medilabapp.models import Admission
+from medilabapp.models import Registration
 
 
 # Create your views here.
@@ -54,3 +55,19 @@ def patient(request):
         return redirect('/patients')
     else:
         return render(request, 'patient.html')
+
+
+def appointment(request):
+    if request.method == 'POST':
+        appointments = Registration(name=request.POST['name'],
+                                    email=request.POST['email'],
+                                    phone=request.POST['phone'],
+                                    date=request.POST['date'],
+                                    department=request.POST['department'],
+                                    doctor=request.POST['doctor'],
+                                    message=request.POST['message'],
+                                    )
+        appointments.save()
+        return redirect('/appointments')
+    else:
+        return render(request, 'appointment.html')
