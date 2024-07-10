@@ -71,3 +71,14 @@ def appointment(request):
         return redirect('/appointments')
     else:
         return render(request, 'appointment.html')
+
+
+def show(request):
+    data = Registration.objects.all()
+    return render(request, 'show.html', {'appointments': data})
+
+
+def delete(request, id):
+    myappointment = Registration.objects.get(id=id)
+    myappointment.delete()
+    return redirect('/shows')

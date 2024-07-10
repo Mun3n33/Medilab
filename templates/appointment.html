@@ -4,30 +4,32 @@
 
 {% block body %}
 
-<form action="" method="POST" style="margin-left:20px">
+<form action="" method="POST" >
      {% csrf_token %}
      <h1 class="text-center">Appointment</h1>
-     <div>
-     <div style="display: block">
-         <div>
+    <br><br>
+     <div class="container" data-aos="fade-up" data-aos-delay="100" >
+     <div class="row">
+         <div class="col-md-4 form-group">
              <label for="name"  class="form-label">Name:</label>
              <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" required="required">
          </div>
-         <div>
+         <div class="col-md-4 form-group mt-3 mt-md-0">
              <label for="email">Email</label>
              <input type="text" id="email" name="email" class="form-control" placeholder="abc@gmail.com" required="required">
          </div>
-         <div>
+         <div class="col-md-4 form-group mt-3 mt-md-0" >
              <label for="phone"  class="form-label">Phone</label><br>
              <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter Number" required="required">
-         </div>
-         <div>
+         </div >
+
+     </div>
+     <div class="row">
+          <div class="col-md-4 form-group mt-3 mt-md-0">
              <label for="date" class="form-label" >Date</label>
              <input type="date" id="date" name="date" class="form-control"  required="required">
          </div>
-     </div>
-     <div style="display: block">
-         <div>
+         <div class="col-md-4 form-group mt-3">
                <label for="department" class="form-label">Department</label>
                <select name="department" id="department" class="form-select" required="">
                 <option value="">Select Department</option>
@@ -36,7 +38,7 @@
                 <option value="Department 3">Department 3</option>
               </select>
          </div>
-         <div>
+         <div class="col-md-4 form-group mt-3">
               <label for="doctors" class="form-label">Doctors</label>
               <select name="doctor" id="doctor" class="form-select" required="">
                 <option value="">Select Doctor</option>
@@ -45,14 +47,16 @@
                 <option value="Doctor 3">Doctor 3</option>
               </select>
          </div>
+     </div>
+
          <div>
-                <label for="message" class="form-label">Message</label><br><br>
-                <textarea name="message" id="message" cols="30" rows="10" placeholder="Enter message"></textarea>
+                <label for="message" class="form-label">Message</label><br>
+                <textarea name="message" id="message" cols="30" rows="5" placeholder="Enter message" style="width: 100%"></textarea>
          </div>
      </div>
-     </div>
-    <div style="text-align: center;"><button type="submit" style="color:blue">Submit</button></div>
-
+    <br>
+    <div style="text-align: center;"><button type="submit" class="btn btn-primary">Make an appointment</button></div>
+    <br>
 </form>
     
     
