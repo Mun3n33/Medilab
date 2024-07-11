@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from medilabapp.models import Company
 from medilabapp.models import Admission
 from medilabapp.models import Registration
+from medilabapp.forms import RegistrationForm
 
 
 # Create your views here.
@@ -82,3 +83,26 @@ def delete(request, id):
     myappointment = Registration.objects.get(id=id)
     myappointment.delete()
     return redirect('/shows')
+
+
+def edit(request, id):
+    appointment = Registration.objects.get(id=id)
+    return render(request, 'edit.html', {'x': appointment})
+
+
+def update(request, id):
+    appointment = Registration.objects.get(id=id)
+    form = RegistrationForm(request.POST, instance=appointment)
+    if form.is_valid():
+        form.save()
+        return redirect('/shows')
+    else:
+        return render(request, 'edit.html', )
+
+
+def register(request):
+    return render(request, 'register.html')
+
+
+def login(request):
+    return render(request, 'login.html')

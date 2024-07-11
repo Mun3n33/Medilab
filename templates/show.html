@@ -26,8 +26,9 @@
        <td>{{ y.doctor }}</td>
        <td>{{ y.message }}</td>
        <td>
-           <a href="" class="btn btn-warning">Edit</a>
+           <a href="/edit/{{ y.id }}" class="btn btn-warning">Edit</a>
            <a href="/deletes/{{ y.id }}" class="btn btn-danger">Delete</a>
+
        </td>
    </tr>
 {% endfor %}
