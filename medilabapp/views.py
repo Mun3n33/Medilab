@@ -1,13 +1,26 @@
 from django.shortcuts import render, redirect
+
+from medilabapp.forms import RegistrationForm, ImageUploadForm
+from medilabapp.models import Admission, ImageModel
 from medilabapp.models import Company
-from medilabapp.models import Admission
+from medilabapp.models import Member
 from medilabapp.models import Registration
-from medilabapp.forms import RegistrationForm
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        if Member.objects.filter(
+                username=request.POST['username'],
+                password=request.POST['password']).exists():
+            member = Member.objects.get(username=request.POST['username'],
+                                        password=request.POST['password']
+                                        )
+            return render(request, 'index.html', {'member': member})
+        else:
+            return render(request, 'login.html')
+    else:
+        return render(request, 'login.html')
 
 
 def start(request):
@@ -86,13 +99,13 @@ def delete(request, id):
 
 
 def edit(request, id):
-    appointment = Registration.objects.get(id=id)
-    return render(request, 'edit.html', {'x': appointment})
+    appointments = Registration.objects.get(id=id)
+    return render(request, 'edit.html', {'x': appointments})
 
 
 def update(request, id):
-    appointment = Registration.objects.get(id=id)
-    form = RegistrationForm(request.POST, instance=appointment)
+    appointments = Registration.objects.get(id=id)
+    form = RegistrationForm(request.POST, instance=appointments)
     if form.is_valid():
         form.save()
         return redirect('/shows')
@@ -101,8 +114,39 @@ def update(request, id):
 
 
 def register(request):
-    return render(request, 'register.html')
+    if request.method == 'POST':
+        members = Member(
+            name=request.POST['name'],
+            username=request.POST['username'],
+            password=request.POST['password'],
+        )
+        members.save()
+        return redirect('/login')
+    else:
+        return render(request, 'register.html')
 
 
 def login(request):
     return render(request, 'login.html')
+
+
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/showimage')
+    else:
+        form = ImageUploadForm()
+    return render(request, 'upload.html', {'form': form})
+
+
+def show_image(request):
+    images = ImageModel.objects.all()
+    return render(request, 'showimages.html', {'images': images})
+
+
+def imagedelete(request, id):
+    image = ImageModel.objects.get(id=id)
+    image.delete()
+    return redirect('/showimages')
